@@ -2,10 +2,36 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const clientDir = __dirname + "\\client\\"
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/', {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
 
 app.use(express.json())
 app.use(express.urlencoded())
+
+
+const clientDir = __dirname + "\\client\\"
+
+const personSchema = new mongoose.Schema({
+    name: String,
+    mail: String
+})
+
+const person = mongoose.model("person", personSchema)
+
+app.post("/", (req, res) => {
+    var Alex = new person({name: req.body.name , mail: req.body.mail})
+    Alex.save()
+    res.send("example listening on port port!")
+})
+
 
 app.get('/', (req, res) => res.sendFile(clientDir + "hemsida.html" ))
 app.get('/hemsida.css' , (req, res) => res.sendFile(clientDir + "hemsida.css" ))
