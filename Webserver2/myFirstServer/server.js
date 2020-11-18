@@ -33,7 +33,7 @@ app.post("/", (req, res) => {
 })
 
 
-app.get('/', (req, res) => res.sendFile(clientDir + "hemsida.html" ))
+app.get('/', (req, res) => res.sendFile(clientDir + "hemsida.ejs" ))
 app.get('/hemsida.css' , (req, res) => res.sendFile(clientDir + "hemsida.css" ))
 app.get('/joggnyjordi.jpg' , (req, res) => res.sendFile(clientDir + "joggnyjordi.jpg"))
 
